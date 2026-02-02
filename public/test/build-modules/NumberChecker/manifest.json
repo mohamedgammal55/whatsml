@@ -1,0 +1,56 @@
+{
+  "modules/NumberChecker/resources/js/Pages/Scanner/Index.vue": {
+    "file": "assets/Index-_S7Tq59u.js",
+    "name": "Index",
+    "src": "modules/NumberChecker/resources/js/Pages/Scanner/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "modules/NumberChecker/resources/js/app.js"
+    ],
+    "css": [
+      "assets/Index-Dl9qzJ5H.css"
+    ]
+  },
+  "modules/NumberChecker/resources/js/app.js": {
+    "file": "assets/app-MzfhBUZ_.js",
+    "name": "app",
+    "src": "modules/NumberChecker/resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "modules/NumberChecker/resources/js/Pages/Scanner/Index.vue"
+    ],
+    "css": [
+      "assets/app-D5HAdpT2.css"
+    ]
+  },
+  "node_modules/boxicons/fonts/boxicons.eot": {
+    "file": "assets/boxicons-CSrLvhY_.eot",
+    "src": "node_modules/boxicons/fonts/boxicons.eot"
+  },
+  "node_modules/boxicons/fonts/boxicons.svg": {
+    "file": "assets/boxicons-Dp7W9qN3.svg",
+    "src": "node_modules/boxicons/fonts/boxicons.svg"
+  },
+  "node_modules/boxicons/fonts/boxicons.ttf": {
+    "file": "assets/boxicons-EIQNrSje.ttf",
+    "src": "node_modules/boxicons/fonts/boxicons.ttf"
+  },
+  "node_modules/boxicons/fonts/boxicons.woff": {
+    "file": "assets/boxicons-CTVby2V1.woff",
+    "src": "node_modules/boxicons/fonts/boxicons.woff"
+  },
+  "node_modules/boxicons/fonts/boxicons.woff2": {
+    "file": "assets/boxicons-CeGEncwm.woff2",
+    "src": "node_modules/boxicons/fonts/boxicons.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-CO7_37Qk.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/scss/admin/main.scss": {
+    "file": "assets/main-CCcmmSfD.css",
+    "src": "resources/scss/admin/main.scss",
+    "isEntry": true
+  }
+}

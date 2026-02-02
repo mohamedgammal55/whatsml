@@ -1,0 +1,1 @@
+import{c as a,o,t as c,n as m}from"./app-fEKA3BkQ.js";const i={__name:"TextMessage",props:["message"],setup(e){return(n,r)=>{var s,t;return o(),a("p",{class:m({"text-gray-600 dark:text-white":e.message.direction=="out"})},c(((s=e.message.body)==null?void 0:s.body)??((t=e.message.body)==null?void 0:t.text)??e.message.body),3)}}};export{i as default};

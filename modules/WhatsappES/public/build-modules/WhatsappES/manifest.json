@@ -1,0 +1,50 @@
+{
+  "modules/WhatsappES/resources/js/Pages/Admin/Setting.vue": {
+    "file": "assets/Setting-PlvawREr.js",
+    "name": "Setting",
+    "src": "modules/WhatsappES/resources/js/Pages/Admin/Setting.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "modules/WhatsappES/resources/js/app.js"
+    ]
+  },
+  "modules/WhatsappES/resources/js/Pages/Signup.vue": {
+    "file": "assets/Signup-B9hdnUk6.js",
+    "name": "Signup",
+    "src": "modules/WhatsappES/resources/js/Pages/Signup.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "modules/WhatsappES/resources/js/app.js"
+    ]
+  },
+  "modules/WhatsappES/resources/js/app.js": {
+    "file": "assets/app-BL7UDPsO.js",
+    "name": "app",
+    "src": "modules/WhatsappES/resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "modules/WhatsappES/resources/js/Pages/Admin/Setting.vue",
+      "modules/WhatsappES/resources/js/Pages/Signup.vue"
+    ]
+  },
+  "modules/WhatsappES/resources/css/app.css": {
+    "file": "assets/app-CO7_37Qk.css",
+    "src": "modules/WhatsappES/resources/css/app.css",
+    "isEntry": true
+  },
+  "modules/WhatsappES/resources/scss/admin/main.scss": {
+    "file": "assets/main-BrWsL_Xx.css",
+    "src": "modules/WhatsappES/resources/scss/admin/main.scss",
+    "isEntry": true
+  },
+  "resources/css/app.css": {
+    "file": "build/assets/app-VUqpxaSo.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/scss/admin/main.scss": {
+    "file": "build/assets/main-DAoytPgP.css",
+    "src": "resources/scss/admin/main.scss",
+    "isEntry": true
+  }
+}

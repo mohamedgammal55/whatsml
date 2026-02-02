@@ -1,0 +1,1 @@
+import{p as t,c,g as r,o as l}from"./app-fEKA3BkQ.js";const m=["src"],u={__name:"AudioMessage",props:["message"],setup(a){const o=t(()=>{var e,s;return((e=a.message.meta)==null?void 0:e.media_url)??((s=a.message.body)==null?void 0:s.link)??!1});return(e,s)=>o.value?(l(),c("audio",{key:0,controls:"",src:o.value},null,8,m)):r("",!0)}};export{u as default};

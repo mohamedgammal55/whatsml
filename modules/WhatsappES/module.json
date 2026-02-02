@@ -1,0 +1,36 @@
+{
+    "name": "WhatsappES",
+    "alias": "whatsapp-es",
+    "keywords": [],
+    "priority": 1,
+    "providers": [
+        "Modules\\WhatsappES\\App\\Providers\\WhatsappESServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "accessible": true,
+    "version": "1.0",
+    "module_type": "Features",
+    "menu": [
+        {
+            "menu_type": "admin",
+            "id": "m3n2ss235",
+            "heading": "Whatsapp ES (Add Ons)",
+            "order": 10,
+            "deletable": false,
+            "module": "whatsapp-es",
+            "links": [
+                {
+                    "id": "545476958",
+                    "icon": "mdi:account-circle-outline",
+                    "text": "Configuration",
+                    "href": "\/admin\/whatsapp-es\/settings",
+                    "target": "_self",
+                    "deletable": true
+                }
+            ]
+        }
+    ],
+    "module_key": "44947f49-e4f8-demo-ab6d-2fef35e8074d"
+}

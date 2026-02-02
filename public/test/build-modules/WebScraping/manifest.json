@@ -1,0 +1,120 @@
+{
+  "_NoDataFound-gHLvve9L.js": {
+    "file": "assets/NoDataFound-gHLvve9L.js",
+    "name": "NoDataFound",
+    "imports": [
+      "modules/WebScraping/resources/js/app.js"
+    ]
+  },
+  "_SpinnerBtn-BRhsJjyu.js": {
+    "file": "assets/SpinnerBtn-BRhsJjyu.js",
+    "name": "SpinnerBtn",
+    "imports": [
+      "modules/WebScraping/resources/js/app.js"
+    ]
+  },
+  "_UserLayout-CW4WQNv3.js": {
+    "file": "assets/UserLayout-CW4WQNv3.js",
+    "name": "UserLayout",
+    "imports": [
+      "modules/WebScraping/resources/js/app.js"
+    ],
+    "dynamicImports": [
+      "resources/js/Components/Dashboard/OverviewGrid.vue"
+    ],
+    "css": [
+      "assets/UserLayout-Dl9qzJ5H.css"
+    ]
+  },
+  "_UserLayout-Dl9qzJ5H.css": {
+    "file": "assets/UserLayout-Dl9qzJ5H.css",
+    "src": "_UserLayout-Dl9qzJ5H.css"
+  },
+  "modules/WebScraping/resources/js/Pages/WebScraping/Create.vue": {
+    "file": "assets/Create-DqIixKt2.js",
+    "name": "Create",
+    "src": "modules/WebScraping/resources/js/Pages/WebScraping/Create.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "modules/WebScraping/resources/js/app.js",
+      "_UserLayout-CW4WQNv3.js",
+      "_SpinnerBtn-BRhsJjyu.js"
+    ]
+  },
+  "modules/WebScraping/resources/js/Pages/WebScraping/Index.vue": {
+    "file": "assets/Index-kaoI788q.js",
+    "name": "Index",
+    "src": "modules/WebScraping/resources/js/Pages/WebScraping/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_NoDataFound-gHLvve9L.js",
+      "_UserLayout-CW4WQNv3.js",
+      "modules/WebScraping/resources/js/app.js"
+    ]
+  },
+  "modules/WebScraping/resources/js/Pages/WebScraping/Show.vue": {
+    "file": "assets/Show-ByLlKtgD.js",
+    "name": "Show",
+    "src": "modules/WebScraping/resources/js/Pages/WebScraping/Show.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_UserLayout-CW4WQNv3.js",
+      "modules/WebScraping/resources/js/app.js",
+      "_NoDataFound-gHLvve9L.js",
+      "_SpinnerBtn-BRhsJjyu.js"
+    ]
+  },
+  "modules/WebScraping/resources/js/app.js": {
+    "file": "assets/app-Cvs0Kf0N.js",
+    "name": "app",
+    "src": "modules/WebScraping/resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "modules/WebScraping/resources/js/Pages/WebScraping/Create.vue",
+      "modules/WebScraping/resources/js/Pages/WebScraping/Index.vue",
+      "modules/WebScraping/resources/js/Pages/WebScraping/Show.vue"
+    ],
+    "css": [
+      "assets/app-D5HAdpT2.css"
+    ]
+  },
+  "node_modules/boxicons/fonts/boxicons.eot": {
+    "file": "assets/boxicons-CSrLvhY_.eot",
+    "src": "node_modules/boxicons/fonts/boxicons.eot"
+  },
+  "node_modules/boxicons/fonts/boxicons.svg": {
+    "file": "assets/boxicons-Dp7W9qN3.svg",
+    "src": "node_modules/boxicons/fonts/boxicons.svg"
+  },
+  "node_modules/boxicons/fonts/boxicons.ttf": {
+    "file": "assets/boxicons-EIQNrSje.ttf",
+    "src": "node_modules/boxicons/fonts/boxicons.ttf"
+  },
+  "node_modules/boxicons/fonts/boxicons.woff": {
+    "file": "assets/boxicons-CTVby2V1.woff",
+    "src": "node_modules/boxicons/fonts/boxicons.woff"
+  },
+  "node_modules/boxicons/fonts/boxicons.woff2": {
+    "file": "assets/boxicons-CeGEncwm.woff2",
+    "src": "node_modules/boxicons/fonts/boxicons.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-CO7_37Qk.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/Components/Dashboard/OverviewGrid.vue": {
+    "file": "assets/OverviewGrid-a0l6Z4eu.js",
+    "name": "OverviewGrid",
+    "src": "resources/js/Components/Dashboard/OverviewGrid.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "modules/WebScraping/resources/js/app.js"
+    ]
+  },
+  "resources/scss/admin/main.scss": {
+    "file": "assets/main-DXcqQ_6l.css",
+    "src": "resources/scss/admin/main.scss",
+    "isEntry": true
+  }
+}
