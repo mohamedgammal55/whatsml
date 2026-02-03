@@ -37,7 +37,6 @@ class Handler extends ExceptionHandler
             ], 500);
         }
 
-        // الباقي يبقى طبيعي
         return parent::render($request, $exception);
     }
 
