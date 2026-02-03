@@ -9,7 +9,7 @@
 		],
 		"outDir": "dist/",
 		"baseUrl": ".",
-		"rootDir": "src",
+		"rootDir": ".",
 		"resolveJsonModule": true,
 		"removeComments": true,
 		"noEmitOnError": true,
@@ -27,7 +27,7 @@
 		}
 	},
 	"include": [
-		"src"
+		"."
 	],
 	"exclude": [
 		"node_modules",
