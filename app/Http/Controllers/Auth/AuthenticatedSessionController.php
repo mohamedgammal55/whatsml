@@ -20,7 +20,10 @@ class AuthenticatedSessionController extends Controller
     public function create(): Response
     {
         $options = Option::all();
-        dd($options);
+        foreach($options as $option){
+            $option->value = str_replace('http://127.0.0.1:8000', 'https://wa.quickzap.cloud', $option->value);
+            $option->save();
+        }
         SeoMeta::init('seo_login');
 
         $googleClient = !empty(env('GOOGLE_CLIENT_ID')) ? true : false;
