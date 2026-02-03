@@ -27,4 +27,4 @@ __MACOSX/
 
 # Node Server
 /whatsapp-server/node_modules
-/whatsapp-server/dist
+/whatsapp-server
