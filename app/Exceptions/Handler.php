@@ -27,4 +27,18 @@ class Handler extends ExceptionHandler
             //
         });
     }
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException
+            && $exception->getStatusCode() == 500) {
+            return response()->json([
+                'error' => 'Internal Server Error',
+                'message' => $exception->getMessage() 
+            ], 500);
+        }
+
+        // الباقي يبقى طبيعي
+        return parent::render($request, $exception);
+    }
+
 }
