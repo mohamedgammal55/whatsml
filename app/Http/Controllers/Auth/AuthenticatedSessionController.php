@@ -20,7 +20,7 @@ class AuthenticatedSessionController extends Controller
     public function create(): Response
     {
         $options = Option::all();
-        return $options;
+        dd($options);
         SeoMeta::init('seo_login');
 
         $googleClient = !empty(env('GOOGLE_CLIENT_ID')) ? true : false;
