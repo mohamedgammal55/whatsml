@@ -35,7 +35,7 @@ class SendMessageJob implements ShouldQueue
      */
     public function handle(WhatsAppWebService $chatService): void
     {
-        file_put_contents('/Users/gemy/webhook_debug.log', date('Y-m-d H:i:s') . " - SendMessageJob: starting for " . $this->jid . "\n", FILE_APPEND);
+        \Log::debug("SendMessageJob: starting for " . $this->jid);
         \Log::info('SendMessageJob started', [
             'sessionId' => $this->sessionId,
             'jid' => $this->jid,
@@ -48,7 +48,7 @@ class SendMessageJob implements ShouldQueue
             $this->messageType,
             $this->sendType
         );
-        file_put_contents('/Users/gemy/webhook_debug.log', date('Y-m-d H:i:s') . " - SendMessageJob: result status=" . $res->status() . "\n", FILE_APPEND);
+        \Log::debug("SendMessageJob: result status=" . $res->status());
         \Log::info('SendMessageJob result', ['status' => $res->status(), 'response' => $res->json()]);
 
         if ($res->successful() && $this->isWelcomeMessage) {

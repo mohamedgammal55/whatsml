@@ -203,13 +203,13 @@ class AutoReplyService
     private function findBestMatch(string $searchQuery): ?AutoReply
     {
         $searchTerms = explode(' ', strtolower($searchQuery));
-        file_put_contents('/Users/gemy/webhook_debug.log', date('Y-m-d H:i:s') . " - findBestMatch: searching for=" . $searchQuery . "\n", FILE_APPEND);
+        \Log::debug("findBestMatch: searching for=" . $searchQuery);
         $potentialMatches = AutoReply::query()
             ->module('whatsapp-web')
             ->matchKeywords($searchTerms)
             ->get();
 
-        file_put_contents('/Users/gemy/webhook_debug.log', date('Y-m-d H:i:s') . " - findBestMatch: found=" . $potentialMatches->count() . "\n", FILE_APPEND);
+        \Log::debug("findBestMatch: found=" . $potentialMatches->count());
 
         $bestMatch = null;
         $maxMatchCount = 0;

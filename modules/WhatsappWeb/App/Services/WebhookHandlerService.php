@@ -104,7 +104,7 @@ class WebhookHandlerService
         try {
             LiveChatNotifyEvent::broadcast($this->payload, $this->platform->owner_id, 'whatsapp-web')->toOthers();
         } catch (\Throwable $th) {
-            file_put_contents('/Users/gemy/webhook_debug.log', date('Y-m-d H:i:s') . " - WebhookHandlerService BroadCast Error (ignored): " . $th->getMessage() . "\n", FILE_APPEND);
+            \Log::error("WebhookHandlerService BroadCast Error: " . $th->getMessage());
         }
     }
 }
