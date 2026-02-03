@@ -20,10 +20,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
-        Option::where('value', 'like', '%http://127.0.0.1:8000%')
-            ->update([
-                'value' => DB::raw("REPLACE(value, 'http://127.0.0.1:8000', 'https://wa.quickzap.cloud')")
-            ]);
 
         SeoMeta::init('seo_login');
 
