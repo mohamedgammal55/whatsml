@@ -2,6 +2,7 @@
 defineProps(['data'])
 </script>
 
+
 <template>
   <div
     class="signin-banner-left-box signin-banner-bg p-relative"

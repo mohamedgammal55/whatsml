@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Option;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Helpers\SeoMeta;
@@ -18,6 +19,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
+        $options = Option::all();
+        return $options;
         SeoMeta::init('seo_login');
 
         $googleClient = !empty(env('GOOGLE_CLIENT_ID')) ? true : false;
