@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\DB;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -19,11 +20,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
-        $options = Option::all();
-        foreach($options as $option){
-            $option->value = str_replace('http://127.0.0.1:8000', 'https://wa.quickzap.cloud', $option->value);
-            $option->save();
-        }
+        Option::where('value', 'like', '%http://127.0.0.1:8000%')
+            ->update([
+                'value' => DB::raw("REPLACE(value, 'http://127.0.0.1:8000', 'https://wa.quickzap.cloud')")
+            ]);
+
         SeoMeta::init('seo_login');
 
         $googleClient = !empty(env('GOOGLE_CLIENT_ID')) ? true : false;
