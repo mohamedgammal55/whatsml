@@ -34,6 +34,7 @@ class HandleIncomingMessageJob implements ShouldQueue
             // BroadCast Error (ignored)
         }
         try {
+            file_put_contents(storage_path('logs/webhook.log'), date('Y-m-d H:i:s') . " - HandleIncomingMessageJob START\n", FILE_APPEND);
             $this->createPlatformLog();
             $this->handleAutoReply();
         } catch (\Throwable $th) {

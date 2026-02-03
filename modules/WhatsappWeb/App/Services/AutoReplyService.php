@@ -203,13 +203,13 @@ class AutoReplyService
     private function findBestMatch(string $searchQuery): ?AutoReply
     {
         $searchTerms = explode(' ', strtolower($searchQuery));
-        \Log::debug("findBestMatch: searching for=" . $searchQuery);
+        \Log::info("findBestMatch: searching for=" . $searchQuery);
         $potentialMatches = AutoReply::query()
             ->module('whatsapp-web')
             ->matchKeywords($searchTerms)
             ->get();
 
-        \Log::debug("findBestMatch: found=" . $potentialMatches->count());
+        \Log::info("findBestMatch: found=" . $potentialMatches->count());
 
         $bestMatch = null;
         $maxMatchCount = 0;

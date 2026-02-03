@@ -16,6 +16,7 @@ class VerifyCsrfToken extends Middleware
         'telescope/*',
         '/install',
         '/install/migrate',
-        '/install/verify'
+        '/install/verify',
+        'api/whatsapp-web/webhook'
     ];
 }

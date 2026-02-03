@@ -18,6 +18,17 @@ class WebhookController extends Controller
 
     public function store(Request $request)
     {
+        \Log::emergency('WHATSAPP WEBHOOK HIT - EMERGENCY LOG');
+        \Log::info('WHATSAPP WEBHOOK HIT', [
+            'method' => $request->method(),
+            'url' => $request->fullUrl(),
+            'ip' => $request->ip(),
+            'payload' => $request->all()
+        ]);
+        try {
+            file_put_contents(storage_path('logs/webhook.log'), date('Y-m-d H:i:s') . " - HIT: " . json_encode($request->all()) . "\n", FILE_APPEND);
+        } catch (\Exception $e) {
+        }
         Log::info('whatsapp webhook received', $request->all());
         $platform = Platform::query()->where('uuid', $request->input('sessionId'))->first();
 

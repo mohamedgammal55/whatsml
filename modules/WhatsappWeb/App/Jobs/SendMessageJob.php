@@ -35,7 +35,7 @@ class SendMessageJob implements ShouldQueue
      */
     public function handle(WhatsAppWebService $chatService): void
     {
-        \Log::debug("SendMessageJob: starting for " . $this->jid);
+        \Log::info("SendMessageJob: starting for " . $this->jid);
         \Log::info('SendMessageJob started', [
             'sessionId' => $this->sessionId,
             'jid' => $this->jid,
@@ -48,7 +48,7 @@ class SendMessageJob implements ShouldQueue
             $this->messageType,
             $this->sendType
         );
-        \Log::debug("SendMessageJob: result status=" . $res->status());
+        \Log::info("SendMessageJob: result status=" . $res->status());
         \Log::info('SendMessageJob result', ['status' => $res->status(), 'response' => $res->json()]);
 
         if ($res->successful() && $this->isWelcomeMessage) {
