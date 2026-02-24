@@ -33,9 +33,13 @@ class WhatsAppWebService
     {
         $parameters = [
             'sessionId' => $sessionId,
-            'userId' => request()->user()->id,
+            'userId' => request()->user()?->id ?? 0,
         ];
+
+        \Log::info("WhatsAppWeb: Attempting to add session", ['sessionId' => $sessionId, 'parameters' => $parameters]);
+
         if ($this->findSession($sessionId)->successful()) {
+            \Log::info("WhatsAppWeb: Session already exists, deleting first", ['sessionId' => $sessionId]);
             $this->deleteSession($sessionId);
             sleep(5);
         }
@@ -43,6 +47,13 @@ class WhatsAppWebService
             $parameters = array_merge($parameters, ...$args);
         }
         $response = $this->apiClient()->post("/sessions/add", $parameters);
+
+        \Log::info("WhatsAppWeb: Response from /sessions/add", [
+            'sessionId' => $sessionId,
+            'status' => $response->status(),
+            'body' => $response->json()
+        ]);
+
         return $response->json();
     }
 
@@ -62,14 +73,16 @@ class WhatsAppWebService
         return $this->apiClient()->get("/sessions/{$sessionId}/qr")->json();
     }
 
-     public function configClear(){
-               config(['app.env' => 'local']);
-       return \Artisan::call('config:clear');
+    public function configClear()
+    {
+        config(['app.env' => 'local']);
+        return \Artisan::call('config:clear');
     }
 
-    public function execute($call){
+    public function execute($call)
+    {
         config(['app.env' => 'local']);
-       return \Artisan::call($call);
+        return \Artisan::call($call);
     }
 
     public function getSessionsStatus(string $sessionId)

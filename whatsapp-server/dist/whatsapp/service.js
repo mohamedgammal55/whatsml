@@ -209,8 +209,9 @@ class WhatsappService {
             const handleConnectionUpdate = SSE
                 ? handleSSEConnectionUpdate
                 : handleNormalConnectionUpdate;
+            const { version } = yield (0, baileys_1.fetchLatestBaileysVersion)();
             const { state, saveCreds } = yield (0, store_1.useSession)(sessionId);
-            const socket = (0, baileys_1.default)(Object.assign(Object.assign({ printQRInTerminal: false, generateHighQualityLinkPreview: true, browser: ["macOS", "Chrome", "131.0.6778.205"] }, socketConfig), {
+            const socket = (0, baileys_1.default)(Object.assign(Object.assign({ version, printQRInTerminal: false, generateHighQualityLinkPreview: true, browser: ["Mac OS", "Chrome", "133.0.0.0"] }, socketConfig), {
                 auth: {
                     creds: state.creds,
                     keys: (0, baileys_1.makeCacheableSignalKeyStore)(state.keys, utils_1.logger),
