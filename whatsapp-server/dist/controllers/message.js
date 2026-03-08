@@ -31,7 +31,7 @@ const addLinkPreview = (message, enabled = false) => __awaiter(void 0, void 0, v
 
                 message.contextInfo = message.contextInfo || {};
                 message.contextInfo.externalAdReply = {
-                    title: (previewData && previewData.title) ? previewData.title : "فتح الرابط",
+                    title: (previewData && previewData.title) ? previewData.title : "Open Url",
                     body: (previewData && previewData.description) ? previewData.description : url,
                     mediaType: 1,
                     thumbnailUrl: (previewData && previewData.favicons && previewData.favicons.length > 0) ? previewData.favicons[0] : (previewData && previewData.images && previewData.images.length > 0 ? previewData.images[0] : undefined),
@@ -43,7 +43,7 @@ const addLinkPreview = (message, enabled = false) => __awaiter(void 0, void 0, v
                 // Fallback if scraping fails
                 message.contextInfo = message.contextInfo || {};
                 message.contextInfo.externalAdReply = {
-                    title: "فتح الرابط",
+                    title: "Open Url",
                     body: url,
                     mediaType: 1,
                     sourceUrl: url,
