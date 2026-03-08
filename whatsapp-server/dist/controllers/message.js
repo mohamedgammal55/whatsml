@@ -15,7 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.read = exports.find = exports.deleteMessageForMe = exports.deleteMessage = exports.download = exports.sendBulk = exports.send = exports.list = void 0;
 const baileys_1 = require("baileys");
 const link_preview_js_1 = require("link-preview-js");
-const addLinkPreview = (message) => __awaiter(void 0, void 0, void 0, function* () {
+const addLinkPreview = (message, enabled = false) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!enabled) return;
     if (message && message.text && typeof message.text === 'string' && message.text.toLowerCase().includes('http')) {
         const urlMatch = message.text.match(/https?:\/\/[^\s]+/);
         if (urlMatch) {
@@ -95,7 +96,7 @@ exports.list = list;
 const send = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const start = Date.now();
     try {
-        const { jid, type = "number", message, options } = req.body;
+        const { jid, type = "number", message, options, generate_link_preview = false } = req.body;
         const sessionId = req.params.sessionId;
         utils_1.logger.info({ sessionId, jid, type }, "Starting send message process");
         const session = service_1.default.getSession(sessionId);
@@ -109,7 +110,7 @@ const send = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!validJid)
             return res.status(400).json({ error: "JID does not exists" });
         yield (0, misc_1.updatePresence)(session, Types_1.WAPresence.Available, validJid);
-        yield addLinkPreview(message);
+        yield addLinkPreview(message, generate_link_preview);
         utils_1.logger.info("Calling session.sendMessage");
         const result = yield session.sendMessage(validJid, message, options);
         utils_1.logger.info({ elapsed: Date.now() - start }, "session.sendMessage finished");
@@ -142,7 +143,7 @@ const sendBulk = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             if (index > 0)
                 yield (0, utils_1.delay)(delay);
             yield (0, misc_1.updatePresence)(session, Types_1.WAPresence.Available, jid);
-            yield addLinkPreview(message);
+            yield addLinkPreview(message, req.body.generate_link_preview || false);
             const result = yield session.sendMessage(jid, message, options);
             results.push({ index, result });
             (0, utils_1.emitEvent)("send.message", sessionId, { jid, result });

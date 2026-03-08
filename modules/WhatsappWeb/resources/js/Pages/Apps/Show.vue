@@ -50,7 +50,8 @@ const integrations = {
 --form 'app_key="${props.app.key}"' \n
 --form 'auth_key="${props.authKey}"' \n
 --form 'to="RECEIVER_NUMBER"' \n
---form 'message="Example message"'`,
+--form 'message="Example message"' \n
+--form 'generate_link_preview="true"'`,
     media_url: `curl --location --request POST '${route('user.whatsapp-web.api.send-message')}' \n
 --form 'app_key="${props.app.key}"' \n
 --form 'auth_key="${props.authKey}"' \n
@@ -82,6 +83,7 @@ const integrations = {
       'auth_key' => '${props.authKey}',
       'to' => 'RECEIVER_NUMBER',
       'message' => 'Example message',
+      'generate_link_preview' => true,
       ),
     ));
 
@@ -149,7 +151,8 @@ const integrations = {
         'app_key': '${props.app.key}',
         'auth_key': '${props.authKey}',
         'to': 'RECEIVER_NUMBER',
-        'message': 'Example message'
+        'message': 'Example message',
+        'generate_link_preview': true
       }
     };
     request(options, function (error, response) {
@@ -212,7 +215,7 @@ const integrations = {
     'auth_key': '${props.authKey}',
     'to': 'RECEIVER_NUMBER',
     'message': 'Example message',
-
+    'generate_link_preview': True
     }
     files=[]
     headers = {}
@@ -306,6 +309,12 @@ const apiParameters = [
     type: 'string',
     required: 'Optional',
     description: 'Optional caption for media messages'
+  },
+  {
+    value: 'generate_link_preview',
+    type: 'boolean (true/false)',
+    required: 'Optional (Default: false)',
+    description: 'If true, automatically adds a clickable button and link preview for URLs in the message.'
   }
 ]
 </script>

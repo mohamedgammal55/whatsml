@@ -23,6 +23,7 @@ class AppController extends Controller
             'media_url' => ['nullable', 'url'],
             'file' => ['nullable', 'file', 'max:10240'],
             'caption' => ['nullable', 'string', 'max:1000'],
+            'generate_link_preview' => ['nullable', 'boolean'],
         ]);
 
         $appUser = User::query()
@@ -90,6 +91,10 @@ class AppController extends Controller
             ],
             default => ['text' => $request->get('message')],
         };
+
+        if ($request->has('generate_link_preview')) {
+            $message['generate_link_preview'] = (bool) $request->get('generate_link_preview');
+        }
 
         $trackingId = uniqid('msg_', true);
         $message['tracking_id'] = $trackingId;

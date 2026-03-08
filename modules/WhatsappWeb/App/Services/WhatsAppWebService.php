@@ -108,6 +108,10 @@ class WhatsAppWebService
             $data['options'] = $options;
         }
 
+        if (isset($message['generate_link_preview'])) {
+            $data['generate_link_preview'] = $message['generate_link_preview'];
+        }
+
         $data["message"] = match ($messageType) {
             'text' => ['text' => $this->replaceShortCodes($message['text'], $jid)],
             'location' => [
