@@ -32,6 +32,7 @@ const subTypes = [
     title: 'Text',
     value: 'text'
   },
+  /*
   {
     title: 'Media (URL)',
     value: 'media_url'
@@ -40,6 +41,7 @@ const subTypes = [
     title: 'Media (Upload)',
     value: 'media_upload'
   }
+  */
 ]
 
 const integrations = {
