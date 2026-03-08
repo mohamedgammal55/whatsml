@@ -97,6 +97,22 @@ class WebhookHandlerService
     {
         $this->liveChatNotifyEvent();
 
+        $status = data_get($this->payload, 'status');
+        $trackingId = $this->getData('tracking_id') ?? $this->getData('request.tracking_id');
+
+        if ($trackingId) {
+            $log = \Modules\WhatsappWeb\App\Models\WhatsappWebAppLog::where('tracking_id', $trackingId)->first();
+            if ($log) {
+                $log->update([
+                    'status_code' => $status === 'success' ? 200 : 500,
+                    'response' => array_merge($log->response ?? [], [
+                        'webhook_status' => $status,
+                        'webhook_message' => data_get($this->payload, 'message'),
+                        'webhook_data' => $this->data,
+                    ])
+                ]);
+            }
+        }
     }
 
     private function liveChatNotifyEvent()

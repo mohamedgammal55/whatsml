@@ -72,7 +72,7 @@ class ChatService
         switch ($type) {
             case 'text':
                 $body = [
-                    'preview_url' => false,
+                    'preview_url' => true,
                     'body' => $request->input('message'),
                 ];
                 break;

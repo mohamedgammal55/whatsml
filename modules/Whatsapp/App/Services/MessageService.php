@@ -103,7 +103,7 @@ class MessageService implements MessageServiceContract
             "recipient_type" => "individual",
             'to' => $recipientId,
             'type' => $messageType,
-            $messageType => $messageBody,
+            $messageType => ($messageType === 'text') ? array_merge($messageBody, ['preview_url' => true]) : $messageBody,
         ];
 
         if (isset($message->meta['context']['id'])) {

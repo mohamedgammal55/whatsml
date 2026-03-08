@@ -14,6 +14,7 @@ class WhatsappWebAppLog extends Model
         'owner_id',
         'platform_id',
         'app_id',
+        'tracking_id',
         'to',
         'status_code',
         'request',

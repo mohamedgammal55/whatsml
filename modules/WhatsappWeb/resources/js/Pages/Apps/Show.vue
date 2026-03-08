@@ -31,6 +31,14 @@ const subTypes = [
   {
     title: 'Text',
     value: 'text'
+  },
+  {
+    title: 'Media (URL)',
+    value: 'media_url'
+  },
+  {
+    title: 'Media (Upload)',
+    value: 'media_upload'
   }
 ]
 
@@ -40,8 +48,21 @@ const integrations = {
 --form 'app_key="${props.app.key}"' \n
 --form 'auth_key="${props.authKey}"' \n
 --form 'to="RECEIVER_NUMBER"' \n
---form 'type="text"' \n
---form 'message="Example message"'`
+--form 'message="Example message"'`,
+    media_url: `curl --location --request POST '${route('user.whatsapp-web.api.send-message')}' \n
+--form 'app_key="${props.app.key}"' \n
+--form 'auth_key="${props.authKey}"' \n
+--form 'to="RECEIVER_NUMBER"' \n
+--form 'message_type="image"' \n
+--form 'media_url="https://example.com/image.jpg"' \n
+--form 'caption="Optional caption"'`,
+    media_upload: `curl --location --request POST '${route('user.whatsapp-web.api.send-message')}' \n
+--form 'app_key="${props.app.key}"' \n
+--form 'auth_key="${props.authKey}"' \n
+--form 'to="RECEIVER_NUMBER"' \n
+--form 'message_type="image"' \n
+--form 'file=@"/path/to/your/file.jpg"' \n
+--form 'caption="Optional caption"'`
   },
   php: {
     text: `$curl = curl_init();
@@ -59,6 +80,54 @@ const integrations = {
       'auth_key' => '${props.authKey}',
       'to' => 'RECEIVER_NUMBER',
       'message' => 'Example message',
+      ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    echo $response;`,
+    media_url: `$curl = curl_init();
+      curl_setopt_array($curl, array(
+      CURLOPT_URL => '${route('user.whatsapp-web.api.send-message')}',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'POST',
+      CURLOPT_POSTFIELDS => array(
+      'app_key' => '${props.app.key}',
+      'auth_key' => '${props.authKey}',
+      'to' => 'RECEIVER_NUMBER',
+      'message_type' => 'image',
+      'media_url' => 'https://example.com/image.jpg',
+      'caption' => 'Optional caption'
+      ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    echo $response;`,
+    media_upload: `$curl = curl_init();
+      curl_setopt_array($curl, array(
+      CURLOPT_URL => '${route('user.whatsapp-web.api.send-message')}',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'POST',
+      CURLOPT_POSTFIELDS => array(
+      'app_key' => '${props.app.key}',
+      'auth_key' => '${props.authKey}',
+      'to' => 'RECEIVER_NUMBER',
+      'message_type' => 'image',
+      'file' => new CURLFILE('/path/to/your/file.jpg'),
+      'caption' => 'Optional caption'
       ),
     ));
 
@@ -84,6 +153,51 @@ const integrations = {
     request(options, function (error, response) {
       if (error) throw new Error(error);
       console.log(response.body);
+    });`,
+    media_url: `var request = require('request');
+    var options = {
+      'method': 'POST',
+      'url': '${route('user.whatsapp-web.api.send-message')}',
+      'headers': {
+      },
+      formData: {
+        'app_key': '${props.app.key}',
+        'auth_key': '${props.authKey}',
+        'to': 'RECEIVER_NUMBER',
+        'message_type': 'image',
+        'media_url': 'https://example.com/image.jpg',
+        'caption': 'Optional caption'
+      }
+    };
+    request(options, function (error, response) {
+      if (error) throw new Error(error);
+      console.log(response.body);
+    });`,
+    media_upload: `var request = require('request');
+    var fs = require('fs');
+    var options = {
+      'method': 'POST',
+      'url': '${route('user.whatsapp-web.api.send-message')}',
+      'headers': {
+      },
+      formData: {
+        'app_key': '${props.app.key}',
+        'auth_key': '${props.authKey}',
+        'to': 'RECEIVER_NUMBER',
+        'message_type': 'image',
+        'file': {
+          'value': fs.createReadStream('/path/to/your/file.jpg'),
+          'options': {
+            'filename': 'file.jpg',
+            'contentType': null
+          }
+        },
+        'caption': 'Optional caption'
+      }
+    };
+    request(options, function (error, response) {
+      if (error) throw new Error(error);
+      console.log(response.body);
     });`
   },
   python: {
@@ -99,6 +213,39 @@ const integrations = {
 
     }
     files=[]
+    headers = {}
+    response = requests.request("POST", url, headers=headers, data=payload, files=files)
+    print(response.text)`,
+    media_url: `import requests
+
+    url = "${route('user.whatsapp-web.api.send-message')}"
+
+    payload={
+    'app_key': '${props.app.key}',
+    'auth_key': '${props.authKey}',
+    'to': 'RECEIVER_NUMBER',
+    'message_type': 'image',
+    'media_url': 'https://example.com/image.jpg',
+    'caption': 'Optional caption'
+    }
+    files=[]
+    headers = {}
+    response = requests.request("POST", url, headers=headers, data=payload, files=files)
+    print(response.text)`,
+    media_upload: `import requests
+
+    url = "${route('user.whatsapp-web.api.send-message')}"
+
+    payload={
+    'app_key': '${props.app.key}',
+    'auth_key': '${props.authKey}',
+    'to': 'RECEIVER_NUMBER',
+    'message_type': 'image',
+    'caption': 'Optional caption'
+    }
+    files=[
+      ('file',('file.jpg',open('/path/to/your/file.jpg','rb'),'image/jpeg'))
+    ]
     headers = {}
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
     print(response.text)`
@@ -131,8 +278,32 @@ const apiParameters = [
   {
     value: 'message',
     type: 'string',
-    required: 'Required',
-    description: 'The message to be sent. The message can be in text only'
+    required: 'Optional',
+    description: 'The message text to be sent'
+  },
+  {
+    value: 'message_type',
+    type: 'string (text, image, video, audio, document, voice)',
+    required: 'Optional (Default: text)',
+    description: 'The type of message to be sent'
+  },
+  {
+    value: 'media_url',
+    type: 'string (URL)',
+    required: 'Required if message_type is media and file is not provided',
+    description: 'The URL of the media to be sent'
+  },
+  {
+    value: 'file',
+    type: 'file',
+    required: 'Required if message_type is media and media_url is not provided',
+    description: 'The file to be uploaded and sent'
+  },
+  {
+    value: 'caption',
+    type: 'string',
+    required: 'Optional',
+    description: 'Optional caption for media messages'
   }
 ]
 </script>

@@ -15,7 +15,7 @@ class WhatsAppWebService
     public function apiClient()
     {
         $baseApiUrl = Config::get('whatsapp-web.base_url') ?? '';
-        return Http::baseUrl(url: $baseApiUrl)->withHeaders([
+        return Http::baseUrl(url: $baseApiUrl)->timeout(120)->withHeaders([
             'X-API-Key' => '12345',
         ]);
     }
