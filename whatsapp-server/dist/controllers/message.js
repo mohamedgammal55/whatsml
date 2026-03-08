@@ -31,20 +31,13 @@ const addLinkPreview = (message, enabled = false) => __awaiter(void 0, void 0, v
 
                 message.contextInfo = message.contextInfo || {};
                 message.contextInfo.externalAdReply = {
-                    title: (previewData && previewData.title) ? previewData.title : "Open Link",
+                    title: (previewData && previewData.title) ? previewData.title : "فتح الرابط",
                     body: (previewData && previewData.description) ? previewData.description : url,
                     mediaType: 1,
-                    // If there's an image, use it, but keep it small (renderLargerThumbnail: false)
                     thumbnailUrl: (previewData && previewData.favicons && previewData.favicons.length > 0) ? previewData.favicons[0] : (previewData && previewData.images && previewData.images.length > 0 ? previewData.images[0] : undefined),
                     sourceUrl: url,
-                    renderLargerThumbnail: false // Minimalist approach as requested
+                    renderLargerThumbnail: false
                 };
-
-                // ADDING A BUTTON: This is the most reliable way to make links clickable for strangers
-                message.footer = "اضغط على الزر أدناه لفتح الرابط";
-                message.templateButtons = [
-                    { index: 1, urlButton: { displayText: 'فتح الرابط', url: url } }
-                ];
             }
             catch (e) {
                 // Fallback if scraping fails
@@ -56,10 +49,6 @@ const addLinkPreview = (message, enabled = false) => __awaiter(void 0, void 0, v
                     sourceUrl: url,
                     renderLargerThumbnail: false
                 };
-                message.footer = "اضغط على الزر أدناه لفتح الرابط";
-                message.templateButtons = [
-                    { index: 1, urlButton: { displayText: 'فتح الرابط', url: url } }
-                ];
             }
         }
     }
