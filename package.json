@@ -12,6 +12,7 @@
     "build:web-scraping": "vite build --config modules/WebScraping/vite.config.js",
     "build:number-checker": "vite build --config modules/NumberChecker/vite.config.js"
   },
+  
   "devDependencies": {
     "@iconify/vue": "^4.3.0",
     "@mertasan/tailwindcss-variables": "^2.7.0",
