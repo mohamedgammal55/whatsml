@@ -1,4 +1,41 @@
-// Vendor css files.
+// Base
+@use 'tailwind';
+@use 'base';
+@use 'typography';
+@use 'utilities';
+@use 'sidebar';
+@use 'reset';
+
+// Components
+@use 'components/toggle';
+@use 'components/card';
+@use 'components/calendar';
+@use 'components/button';
+@use 'components/breadcrumb';
+@use 'components/dropdown';
+@use 'components/accordion';
+@use 'components/badge';
+@use 'components/input';
+@use 'components/input-group';
+@use 'components/textarea';
+@use 'components/alert';
+@use 'components/radio';
+@use 'components/checkbox';
+@use 'components/modal';
+@use 'components/pagination';
+@use 'components/avatar';
+@use 'components/tabs';
+@use 'components/toast';
+@use 'components/list-group';
+@use 'components/select';
+@use 'components/table';
+@use 'components/datepicker';
+@use 'components/data-table';
+@use 'components/carousel';
+@use 'components/drawer';
+@use 'components/uploader';
+
+// Vendor CSS files (plain CSS @import - passed through as-is)
 @import 'simplebar/dist/simplebar.min.css';
 @import 'boxicons/css/boxicons.css';
 @import 'flatpickr/dist/flatpickr.css';
@@ -20,43 +57,3 @@
 @import 'tippy.js/themes/light-border.css';
 @import 'tippy.js/themes/material.css';
 @import 'tippy.js/themes/translucent.css';
-
-// Base
-@import 'tailwind';
-@import 'base';
-@import 'typography';
-@import 'utilities';
-@import 'sidebar';
-@import 'reset';
-
-// Components
-
-@import 'components/toggle';
-@import 'components/card';
-@import 'components/calendar';
-@import 'components/button';
-@import 'components/breadcrumb';
-@import 'components/dropdown';
-@import 'components/accordion';
-@import 'components/badge';
-@import 'components/input';
-@import 'components/input-group';
-@import 'components/textarea';
-@import 'components/alert';
-@import 'components/radio';
-@import 'components/checkbox';
-@import 'components/modal';
-@import 'components/pagination';
-@import 'components/avatar';
-
-@import 'components/tabs';
-@import 'components/toast';
-@import 'components/list-group';
-@import 'components/select';
-@import 'components/table';
-
-@import 'components/datepicker';
-@import 'components/data-table';
-@import 'components/carousel';
-@import 'components/drawer';
-@import 'components/uploader';
