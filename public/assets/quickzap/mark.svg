@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 170" fill="none">
+  <!-- speech bubble outline -->
+  <path d="M70 20h70a40 40 0 0 1 40 40v40a40 40 0 0 1-40 40H96l-18 24v-24H70a40 40 0 0 1-40-40V60a40 40 0 0 1 40-40Z"
+        stroke="#15b364" stroke-width="11" stroke-linejoin="round"/>
+  <!-- motion dashes -->
+  <rect x="20" y="55"  width="46" height="11" rx="5.5" fill="#15b364"/>
+  <rect x="6"  y="80"  width="60" height="11" rx="5.5" fill="#f5b400"/>
+  <rect x="20" y="105" width="46" height="11" rx="5.5" fill="#15b364"/>
+  <!-- lightning bolt -->
+  <path d="M118 38 78 92h26l-10 44 58-66h-30l14-32Z" fill="#f5b400"/>
+</svg>

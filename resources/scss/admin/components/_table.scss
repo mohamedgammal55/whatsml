@@ -8,13 +8,15 @@
     --table-tbody-color: theme(colors.slate.600);
     --table-tbody-dark-color: theme(colors.slate.400);
     --table-border-color: theme(colors.slate.200);
-    --table-border-dark-color: theme(colors.slate.600);
-    --table-striped-bg: theme(colors.slate.100);
-    --table-striped-dark-bg: theme(colors.slate.700);
-    --table-hover-bg: theme(colors.slate.50);
-    --table-hover-dark-bg: theme(colors.slate.700);
+    --table-border-dark-color: theme(colors.slate.700);
+    --table-striped-bg: theme(colors.slate.50);
+    --table-striped-dark-bg: theme(colors.slate.800);
+    --table-hover-bg: theme(colors.primary.50);
+    --table-hover-dark-bg: theme(colors.slate.800);
+    --table-thead-bg: theme(colors.slate.50);
+    --table-thead-dark-bg: theme(colors.slate.800 / 60%);
 
-    @apply w-full overflow-hidden rounded-primary border-[var(--table-border-color)] shadow dark:border-[var(--table-border-dark-color)];
+    @apply w-full overflow-hidden rounded-2xl border border-[var(--table-border-color)] bg-[var(--table-bg)] shadow-card dark:border-[var(--table-border-dark-color)] dark:bg-[var(--table-dark-bg)];
 
     thead,
     tbody,
@@ -26,7 +28,11 @@
     }
 
     th {
-      @apply font-semibold text-[var(--table-thead-color)] dark:text-[var(--table-thead-dark-color)];
+      @apply text-xs font-semibold uppercase tracking-wider text-[var(--table-thead-color)] dark:text-[var(--table-thead-dark-color)];
+    }
+
+    & > thead > tr > * {
+      @apply bg-[var(--table-thead-bg)] dark:bg-[var(--table-thead-dark-bg)];
     }
 
     td {

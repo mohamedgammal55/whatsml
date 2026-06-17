@@ -28,12 +28,12 @@
     ]
   },
   "modules/WhatsappES/resources/css/app.css": {
-    "file": "assets/app-CO7_37Qk.css",
+    "file": "build/assets/app-VUqpxaSo.css",
     "src": "modules/WhatsappES/resources/css/app.css",
     "isEntry": true
   },
   "modules/WhatsappES/resources/scss/admin/main.scss": {
-    "file": "assets/main-BrWsL_Xx.css",
+    "file": "build/assets/main-DAoytPgP.css",
     "src": "modules/WhatsappES/resources/scss/admin/main.scss",
     "isEntry": true
   },

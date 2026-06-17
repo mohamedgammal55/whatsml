@@ -1,7 +1,7 @@
 @layer components {
   .card {
     $card: &;
-    @apply w-full rounded-primary bg-white shadow transition-all duration-300 dark:bg-slate-800;
+    @apply w-full rounded-primary border border-slate-200/70 bg-white shadow-card transition-all duration-300 hover:shadow-soft dark:border-slate-700/60 dark:bg-slate-800;
 
     // Direct elements
     &-header {

@@ -14,3 +14,4 @@
 
 <!-- Extra CSS  -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/custom-toastr.css') }}" media="all">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/quickzap-auth.css') }}?v=1">

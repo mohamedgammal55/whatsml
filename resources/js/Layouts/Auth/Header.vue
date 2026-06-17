@@ -33,9 +33,9 @@ const toggleMenu = () => {
           <div class="col-6">
             <div class="header-signin-logo">
               <a v-if="currentRouteGroup('Auth', false)" href="/">
-                <img :src="$page.props.primaryData?.logo" alt="" />
+                <img src="/assets/quickzap/logo-allwhite.png?v=3" alt="QuickZap" style="max-height:40px;width:auto" />
               </a>
-              <a v-else href="/"><img :src="$page.props.primaryData?.logo" alt="" /></a>
+              <a v-else href="/"><img src="/assets/quickzap/logo-allwhite.png?v=3" alt="QuickZap" style="max-height:40px;width:auto" /></a>
             </div>
           </div>
           <div class="col-6">
@@ -57,7 +57,7 @@ const toggleMenu = () => {
         <div class="row g-0 align-items-center">
           <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-4 col-6">
             <div class="header-bottom__logo">
-              <a href="/"><img :src="$page.props.primaryData?.logo" alt="" /></a>
+              <a href="/"><img src="/assets/quickzap/logo-allwhite.png?v=3" alt="QuickZap" style="max-height:40px;width:auto" /></a>
             </div>
           </div>
           <div class="col-xxl-7 col-xl-7 col-lg-7 d-none d-lg-block">

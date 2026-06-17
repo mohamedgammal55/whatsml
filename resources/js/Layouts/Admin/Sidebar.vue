@@ -194,11 +194,8 @@ const isActiveModule = (moduleName) => {
     <a href="/">
       <div class="sidebar-header">
         <div class="sidebar-logo-icon">
-          <img
-            v-lazy="$page.props.primaryData.deep_logo ?? $page.props.primaryData.logo"
-            class="block h-[30px] dark:hidden"
-          />
-          <img v-lazy="$page.props.primaryData.logo" class="hidden h-[30px] dark:block" />
+          <img src="/assets/quickzap/logo.png?v=3" class="block h-[34px] dark:hidden" alt="QuickZap" />
+          <img src="/assets/quickzap/logo-white.png?v=3" class="hidden h-[34px] dark:block" alt="QuickZap" />
         </div>
       </div>
     </a>

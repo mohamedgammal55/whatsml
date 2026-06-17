@@ -27,7 +27,7 @@ const submit = () => {
 <template>
   <Head title="Forgot Password" />
   <div class="signin-banner-area signin-banner-main-wrap d-flex align-items-center">
-   <LeftBanner :data="authPages.login ?? {}" />
+   <LeftBanner :data="authPages?.login ?? {}" />
     <div class="signin-banner-from d-flex justify-content-center align-items-center">
       <div class="signin-banner-from-wrap">
         <div class="signin-banner-title-box">

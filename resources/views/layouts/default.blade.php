@@ -5,6 +5,9 @@
     <link rel="icon" type="image/png" sizes="56x56" href="{{ asset(get_option('primary_data.favicon')) }}">
     @include('layouts.default.meta')
     @include('layouts.default.stylesheets')
+    @include('layouts.quickzap-fonts')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/quickzap-brand.css') }}?v=4">
+
     @vite('resources/js/app.js')
     @inertiaHead
     @cookieconsentscripts

@@ -5,7 +5,7 @@
   },
   "block_feature_twenty_five": {
     "top_title": "Why Us",
-    "title": "WhatsML is perfect for you.",
+    "title": "QuickZap is perfect for you.",
     "subtitle": "Lorem ipsum dolor sit amet. Hic unde iste ut sunt beata expedita mollitia a perspiciatis nemo.",
     "image": "/assets/frontend/images/media/img_56.jpg",
     "counter": {
@@ -59,6 +59,6 @@
   "card": {
     "title": "Any Questions?",
     "button_text": "Let\u2019s Talk",
-    "button_link": "http://WhatsML.test/contact-us"
+    "button_link": "http://QuickZap.test/contact-us"
   }
 }

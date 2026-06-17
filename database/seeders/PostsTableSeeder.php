@@ -37,7 +37,7 @@ class PostsTableSeeder extends Seeder
         array('id' => '37','title' => 'What kind of campaigns can I run?','slug' => 'what-kind-of-campaigns-can-i-run','type' => 'faq','status' => '1','featured' => '1','lang' => 'en','created_at' => '2025-07-21 15:08:56','updated_at' => '2025-07-21 15:32:12'),
         array('id' => '38','title' => 'Can I use AI for replies and automation?','slug' => 'can-i-use-ai-for-replies-and-automation','type' => 'faq','status' => '1','featured' => '1','lang' => 'en','created_at' => '2025-07-21 15:09:18','updated_at' => '2025-07-21 15:31:54'),
         array('id' => '39','title' => 'How can I connect my WhatsApp number?','slug' => 'how-can-i-connect-my-whatsapp-number','type' => 'faq','status' => '1','featured' => '1','lang' => 'en','created_at' => '2025-07-21 15:12:40','updated_at' => '2025-07-21 15:31:32'),
-        array('id' => '40','title' => 'What is WhatsML and how does it work?','slug' => 'what-is-WhatsML-and-how-does-it-work','type' => 'faq','status' => '1','featured' => '1','lang' => 'en','created_at' => '2025-07-21 15:13:03','updated_at' => '2025-07-21 15:19:18'),
+        array('id' => '40','title' => 'What is QuickZap and how does it work?','slug' => 'what-is-QuickZap-and-how-does-it-work','type' => 'faq','status' => '1','featured' => '1','lang' => 'en','created_at' => '2025-07-21 15:13:03','updated_at' => '2025-07-21 15:19:18'),
         array('id' => '43','title' => 'Portia Turner','slug' => 'Freelancer','type' => 'testimonial','status' => '1','featured' => '1','lang' => '5','created_at' => '2025-07-23 05:48:15','updated_at' => '2025-07-28 06:20:22')
         );
           

@@ -3,6 +3,7 @@
 
 <head>
     @include('layouts.auth.head')
+    @include('layouts.quickzap-fonts')
     @vite('resources/js/app.js')
     @inertiaHead
     @cookieconsentscripts

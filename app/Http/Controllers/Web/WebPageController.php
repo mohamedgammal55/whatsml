@@ -53,11 +53,17 @@ class WebPageController extends Controller
 
    $homePageData = get_option_with_locale('home_page');
 
+        $plans = Plan::query()
+            ->where('status', 1)
+            ->orderBy('price', 'asc')
+            ->get();
+
         return Inertia::render('Web/Home', [
             'home' => $homePageData,
             'testimonials' => $testimonials,
             'partner_logos' => $partnerLogos,
-            'faqs' => $faqs
+            'faqs' => $faqs,
+            'plans' => $plans
         ]);
     }
 

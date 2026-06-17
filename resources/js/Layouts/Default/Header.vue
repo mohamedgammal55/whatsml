@@ -19,7 +19,10 @@ const isHomePage = computed(() => {
 </script>
 
 <template>
-  <header class="theme-main-menu menu-style-three menu-overlay sticky-menu">
+  <header
+    class="theme-main-menu menu-style-three menu-overlay sticky-menu"
+    :class="{ 'qz-home-header': isHomePage }"
+  >
     <div class="info-row space-X">
       <div class="d-md-flex justify-content-between">
         <ul class="style-none d-flex justify-content-center up-nav flex-wrap">
@@ -47,8 +50,13 @@ const isHomePage = computed(() => {
           <div class="logo order-lg-0">
             <Link href="/" class="d-flex align-items-center">
               <img
-                :src="primarySettings?.deep_logo ?? '/assets/frontend/images/logo/logo_03.svg'"
-                alt=""
+                :src="
+                  isHomePage
+                    ? '/assets/quickzap/logo-white.png'
+                    : primarySettings?.deep_logo ?? '/assets/quickzap/logo.png'
+                "
+                alt="QuickZap"
+                class="qz-header-logo"
               />
             </Link>
           </div>

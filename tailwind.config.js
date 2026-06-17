@@ -5,26 +5,40 @@ import forms from '@tailwindcss/forms'
 import variables from '@mertasan/tailwindcss-variables'
 import typography from '@tailwindcss/typography'
 
-// Add your custom theme colors here
+// QuickZap brand palette — matched to the official logo (#10B981 green, #FFD700 gold)
 const primary = {
-  /* Green color palette based on #1daa61 */
-  50: '#e8f7ef',
-  100: '#d1f0df',
-  200: '#a3e1bf',
-  300: '#75d29f',
-  400: '#47c37f',
-  500: '#1daa61' /* Base color */,
-  600: '#178a4e',
-  700: '#116a3c',
-  800: '#0c4a2a',
-  900: '#062a17'
+  50: '#ecfdf5',
+  100: '#d1fae5',
+  200: '#a7f3d0',
+  300: '#6ee7b7',
+  400: '#34d399',
+  500: '#10b981' /* Official brand green */,
+  600: '#059669',
+  700: '#047857',
+  800: '#065f46',
+  900: '#064e3b'
+}
+
+// QuickZap lightning-bolt gold accent (#FFD700)
+const accent = {
+  50: '#fffbeb',
+  100: '#fff4c2',
+  200: '#ffea85',
+  300: '#ffe14d',
+  400: '#ffd91f',
+  500: '#ffd700' /* Official accent gold */,
+  600: '#d4af00',
+  700: '#a88a00',
+  800: '#7d6700',
+  900: '#524300'
 }
 
 export const themeColors = {
   primary: primary,
+  accent: accent,
   secondary: colors.gray,
   success: colors.emerald,
-  warning: colors.amber,
+  warning: accent,
   danger: colors.rose,
   info: colors.indigo,
   dark: colors.slate
@@ -42,7 +56,13 @@ export default {
   ],
   theme: {
     fontFamily: {
-      sans: ['Poppins', ...defaultTheme.fontFamily.sans]
+      sans: ['"Plus Jakarta Sans"', 'Poppins', ...defaultTheme.fontFamily.sans],
+      display: [
+        '"Bricolage Grotesque"',
+        '"Sora"',
+        '"Plus Jakarta Sans"',
+        ...defaultTheme.fontFamily.sans
+      ]
     },
     container: {
       center: true,
@@ -111,7 +131,12 @@ export default {
         }
       },
       borderRadius: {
-        primary: '0.4rem'
+        primary: '0.75rem'
+      },
+      boxShadow: {
+        soft: '0 2px 8px -2px rgba(16, 24, 40, 0.06), 0 4px 16px -4px rgba(16, 24, 40, 0.08)',
+        card: '0 1px 2px rgba(16, 24, 40, 0.04), 0 6px 24px -8px rgba(16, 24, 40, 0.10)',
+        brand: '0 8px 24px -6px rgba(21, 179, 100, 0.35)'
       },
       typography: (theme) => ({
         DEFAULT: {

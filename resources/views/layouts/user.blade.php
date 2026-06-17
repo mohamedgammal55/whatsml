@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" sizes="56x56"
         href="{{ asset(get_option('primary_data')['favicon'] ?? 'favicon.png') }}">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    @include('layouts.quickzap-fonts')
 
     <meta name="app-name" content="{{ config('app.name') }}" />
 

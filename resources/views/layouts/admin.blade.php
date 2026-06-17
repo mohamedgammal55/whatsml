@@ -12,6 +12,8 @@
 
     <meta name="app-translations" content="{{ getTranslationFile() }}" />
 
+    @include('layouts.quickzap-fonts')
+
     <script>
         "use strict"
         if (

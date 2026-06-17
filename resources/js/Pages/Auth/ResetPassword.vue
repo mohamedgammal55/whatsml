@@ -45,7 +45,7 @@ const submit = () => {
 <template>
   <Head title="Reset Password" />
   <div class="signin-banner-area signin-banner-main-wrap d-flex align-items-center">
-     <LeftBanner :data="authPages.login ?? {}" />
+     <LeftBanner :data="authPages?.login ?? {}" />
 
     <div class="container px-5">
       <form @submit.prevent="submit">

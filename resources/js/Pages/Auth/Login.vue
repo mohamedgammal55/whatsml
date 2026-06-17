@@ -29,7 +29,7 @@ const submit = () => {
   <Head :title="trans('Login')" />
   <!-- tp-banner-area-start -->
   <div class="signin-banner-area signin-banner-main-wrap d-flex align-items-center">
-    <LeftBanner :data="authPages.login ?? {}" />
+    <LeftBanner :data="authPages?.login ?? {}" />
 
     <div class="signin-banner-from d-flex justify-content-center align-items-center">
       <div class="signin-banner-from-wrap">
