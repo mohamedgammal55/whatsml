@@ -206,6 +206,27 @@ class PlatformController extends Controller
         return back()->with('success', 'Platform has been removed successfully');
     }
 
+    public function reset($uuid)
+    {
+        $platform = Platform::query()->whatsappWeb()
+            ->where('owner_id', activeWorkspaceOwnerId())
+            ->where('uuid', $uuid)->firstOrFail();
+
+        // Hard-clear the stuck session on the Node server so a fresh QR can be
+        // issued. Ignore node errors (e.g. already gone) — we still re-scan.
+        try {
+            app(\Modules\WhatsappWeb\App\Services\WhatsAppWebService::class)
+                ->deleteSession($platform->uuid);
+        } catch (\Throwable $e) {
+            report($e);
+        }
+
+        $platform->status = 'inactive';
+        $platform->save();
+
+        return to_route('user.whatsapp-web.platforms.connection', $platform->uuid);
+    }
+
     public function connection($uuid)
     {
         PageHeader::set(

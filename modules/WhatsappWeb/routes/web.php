@@ -9,6 +9,7 @@ Route::group(['middleware' => ['auth', 'user', 'access_module:whatsapp-web']], f
     // Chats
     Route::resource('platforms', MODULE\PlatformController::class)->except(['edit', 'show']);
     Route::get('/platforms/{uuid}/connection', [MODULE\PlatformController::class, 'connection'])->name('platforms.connection');
+    Route::get('/platforms/{uuid}/reset', [MODULE\PlatformController::class, 'reset'])->name('platforms.reset');
     Route::get('platforms/{platform_uuid}/conversations', [MODULE\PlatformConversationController::class, 'index'])->name('platforms.conversations.index');
 
     // templates

@@ -110,6 +110,15 @@ const verifyNumber = (uuid) => {
               <Icon icon="bx:refresh" class="text-xl" />
             </Link>
 
+            <Link
+              v-if="['disconnected', 'inactive', 'unverified'].includes(platform.status)"
+              title="Reset session & re-scan QR"
+              class="inline-flex items-center justify-center rounded-lg bg-amber-50 p-2.5 text-amber-700 transition-colors hover:bg-amber-100 hover:text-amber-800 dark:bg-amber-900/20 dark:text-amber-400 dark:hover:bg-amber-900/30"
+              :href="route('user.whatsapp-web.platforms.reset', platform.uuid)"
+            >
+              <Icon icon="bx:qr-scan" class="text-xl" />
+            </Link>
+
             <button
               v-if="!platform.meta?.verified"
               title="Verify Number"
