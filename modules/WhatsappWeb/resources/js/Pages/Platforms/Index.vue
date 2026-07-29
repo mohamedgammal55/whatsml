@@ -12,9 +12,16 @@ import { router } from '@inertiajs/vue3'
 import toastComposable from '@/Composables/toastComposable'
 const modalStore = useModalStore()
 
+import useInfiniteScroll from '@/Composables/useInfiniteScroll'
+
 defineOptions({ layout: UserLayout })
 const props = defineProps(['platforms', 'aiTrainings', 'autoResponses'])
 const { deleteRow, badgeClass, textExcerpt } = sharedComposable()
+
+const { list: platformList, loading: loadingMore, sentinel } = useInfiniteScroll(
+  () => props.platforms,
+  'platforms'
+)
 
 const selectedPlatform = ref({})
 
@@ -50,11 +57,11 @@ const verifyNumber = (uuid) => {
   <FilterDropdown :options="filterOptions" />
   <div class="mt-4 flex w-full flex-col gap-4">
     <div
-      v-if="platforms && platforms?.data.length"
+      v-if="platformList.length"
       class="grid grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3"
     >
       <div
-        v-for="(platform, index) in platforms.data"
+        v-for="(platform, index) in platformList"
         :key="index"
         class="card card-body group flex flex-col gap-3 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-200 hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
       >
@@ -194,8 +201,10 @@ const verifyNumber = (uuid) => {
     </div>
     <NoDataFound v-else />
 
-    <div class="w-full">
-      <Paginate v-if="platforms?.data?.length" :links="platforms.links" />
+    <!-- infinite scroll trigger -->
+    <div ref="sentinel" class="h-4 w-full"></div>
+    <div v-if="loadingMore" class="flex justify-center py-4">
+      <Icon icon="bx:loader-alt" class="animate-spin text-2xl text-primary-500" />
     </div>
   </div>
 
