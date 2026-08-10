@@ -10,6 +10,7 @@ import dropdown from '@/Plugins/Admin/dropdown'
 import AssetModal from '@/Components/Dashboard/AssetModal.vue'
 import PageHeader from '@/Layouts/Admin/PageHeader.vue'
 import ToastrContainer from '@/Components/ToastrContainer.vue'
+import OfflineGuard from '@/Components/OfflineGuard.vue'
 
 onMounted(function () {
   dropdown.init()
@@ -23,6 +24,7 @@ onUpdated(function () {
 <template>
   <div>
     <ToastrContainer />
+    <OfflineGuard />
     <Modal />
     <ActionModal />
     <AssetModal />

@@ -5,6 +5,7 @@ import ActionModal from '@/Components/Dashboard/ActionModal.vue'
 import Modal from '@/Components/Dashboard/Modal.vue'
 import ValidationErrors from '@/Components/Dashboard/ValidationErrors.vue'
 import ToastrContainer from '@/Components/ToastrContainer.vue'
+import OfflineGuard from '@/Components/OfflineGuard.vue'
 import Header from '@/Layouts/Admin/Header.vue'
 import Sidebar from '@/Layouts/Admin/Sidebar.vue'
 import dropdown from '@/Plugins/Admin/dropdown'
@@ -24,6 +25,7 @@ onUpdated(function () {
 <template>
   <div>
     <ToastrContainer />
+    <OfflineGuard />
     <Modal />
     <ActionModal />
     <AssetModal />

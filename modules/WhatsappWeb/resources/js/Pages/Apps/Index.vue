@@ -10,11 +10,14 @@ import sharedComposable from '@/Composables/sharedComposable'
 import UserLayout from '@/Layouts/User/UserLayout.vue'
 import { useModalStore } from '@/Store/modalStore'
 import NotificationRing from '@/Components/Chats/NotificationRing.vue'
+import useInfiniteScroll from '@/Composables/useInfiniteScroll'
 
 defineOptions({ layout: UserLayout })
 const props = defineProps(['apps', 'platforms', 'authKey'])
 const { deleteRow } = sharedComposable()
 const modal = useModalStore()
+
+const { list: appList, loading: loadingMore, sentinel } = useInfiniteScroll(() => props.apps, 'apps')
 
 const form = useForm({
   name: '',
@@ -71,9 +74,9 @@ const submit = () => {
   <div class="mt-4 flex w-full flex-col gap-4">
     <div
       class="my-6 grid grid-flow-row grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3"
-      v-if="apps?.data.length"
+      v-if="appList.length"
     >
-      <div v-for="(app, index) in apps.data" :key="index" class="card card-body">
+      <div v-for="(app, index) in appList" :key="index" class="card card-body">
         <div class="flex justify-between">
           <h5 class="card-title mb-3 uppercase text-gray-400 dark:text-gray-50">
             {{ app?.name }}
@@ -127,8 +130,9 @@ const submit = () => {
       </div>
     </div>
     <NoDataFound v-else />
-    <div class="w-full">
-      <Paginate :links="apps.links" />
+    <div ref="sentinel" class="h-4 w-full"></div>
+    <div v-if="loadingMore" class="flex justify-center py-4">
+      <Icon icon="bx:loader-alt" class="animate-spin text-2xl text-primary-500" />
     </div>
   </div>
 </template>
