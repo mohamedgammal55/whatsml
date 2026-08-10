@@ -21,7 +21,8 @@ model Session {
   pkId      Int    @id @default(autoincrement())
   sessionId String @db.VarChar(128)
   id        String @db.VarChar(255)
-  data      String @db.Text
+  // LongText: some Baileys keys (app-state / signal) exceed the 64KB TEXT limit.
+  data      String @db.LongText
 
   @@unique([sessionId, id], map: "unique_id_per_session_id_4")
   @@index([sessionId])
