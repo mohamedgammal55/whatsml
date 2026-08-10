@@ -1,0 +1,85 @@
+// QuickZap WhatsApp server (v2) — Prisma schema.
+//
+// The `session` table stores the Baileys auth state (creds + signal keys) and
+// is the only table this server strictly needs. It maps to the SAME table the
+// platform already uses, so linked numbers keep working.
+//
+// For full chat/contact/message history, run `npm run prisma:pull` once against
+// your live DB to introspect the remaining tables — the server degrades
+// gracefully (chat-history endpoints return empty) until you do.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  pkId      Int    @id @default(autoincrement())
+  sessionId String @db.VarChar(128)
+  id        String @db.VarChar(255)
+  data      String @db.Text
+
+  @@unique([sessionId, id], map: "unique_id_per_session_id_4")
+  @@index([sessionId])
+  @@map("session")
+}
+
+// Shared with the platform + old server. Read existing history, write new events.
+model Chat {
+  pkId                  Int     @id @default(autoincrement())
+  sessionId             String  @db.VarChar(128)
+  id                    String  @db.VarChar(128)
+  name                  String? @db.VarChar(128)
+  displayName           String? @db.VarChar(128)
+  conversationTimestamp BigInt?
+  unreadCount           Int?
+  picture               String? @db.VarChar(128)
+  archived              Boolean?
+  lidJid                String? @db.VarChar(128)
+  pnJid                 String? @db.VarChar(128)
+  readOnly              Boolean?
+  auto_reply_enabled    Boolean? @default(true)
+  badge_id              Int?
+
+  @@unique([sessionId, id], map: "unique_id_per_session_id_1")
+  @@index([sessionId])
+  @@map("chat")
+}
+
+model Contact {
+  pkId         Int     @id @default(autoincrement())
+  sessionId    String  @db.VarChar(128)
+  id           String  @db.VarChar(128)
+  name         String? @db.VarChar(128)
+  notify       String? @db.VarChar(128)
+  verifiedName String? @db.VarChar(128)
+  imgUrl       String? @db.VarChar(255)
+  status       String? @db.VarChar(128)
+
+  @@unique([sessionId, id], map: "unique_id_per_session_id_2")
+  @@index([sessionId])
+  @@map("contact")
+}
+
+model Message {
+  pkId             Int      @id @default(autoincrement())
+  sessionId        String   @db.VarChar(128)
+  remoteJid        String   @db.VarChar(128)
+  id               String   @db.VarChar(128)
+  key              Json
+  message          Json?
+  messageTimestamp BigInt?
+  pushName         String?  @db.VarChar(128)
+  status           Int?
+  participant      String?  @db.VarChar(128)
+  reactions        Json?
+  starred          Boolean?
+
+  @@unique([sessionId, remoteJid, id], map: "unique_message_key_per_session_id")
+  @@index([sessionId])
+  @@map("message")
+}

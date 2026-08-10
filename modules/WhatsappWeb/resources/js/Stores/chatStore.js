@@ -5,6 +5,7 @@ import { defineStore } from 'pinia'
 
 import toast from '@/Composables/toastComposable'
 import echoService from '@/Composables/echoServiceComposable'
+import { io as socketIoClient } from 'socket.io-client'
 import { useModalStore } from '@/Store/modalStore'
 
 export const useChatStore = defineStore('chatStore', () => {
@@ -533,6 +534,67 @@ export const useChatStore = defineStore('chatStore', () => {
   }
   // end quick reply functions
 
+  // realtime via the Node socket.io server — token-scoped, secure (a client
+  // only receives events for its own sessions). Reuses the same handlers.
+  let waSocket = null
+  // Normalize a message's remoteJid to whichever open conversation it belongs to
+  // (WhatsApp LID: same contact via @lid OR phone jid), then hand it to the
+  // existing upsert handler so it renders in the right thread.
+  const feedMessage = (sessionId, raw) => {
+    const msg = raw && raw.key ? raw : raw?.message?.key ? raw.message : raw
+    if (!msg || !msg.key) return
+    const rj = msg.key.remoteJid
+    const alt = msg.key.remoteJidAlt
+    const conv = conversations.value.find((x) => x.id === rj || x.id === alt)
+    if (conv && msg.key.remoteJid !== conv.id) {
+      msg.key = { ...msg.key, remoteJid: conv.id }
+    }
+    handleLiveChatNotifyEvent({ event: 'messages.upsert', sessionId, data: { messages: msg } })
+  }
+  const connectSocketIO = (cfg = {}, sessionIds = []) => {
+    if (!cfg || !cfg.url || !cfg.token) return
+    try {
+      waSocket = socketIoClient(cfg.url, {
+        transports: ['websocket', 'polling'],
+        auth: { token: cfg.token },
+        reconnection: true,
+        reconnectionDelay: 2000
+      })
+      waSocket.on('connect', () => {
+        sessionIds.forEach((sid) => waSocket.emit('subscribe', sid))
+      })
+      waSocket.on('messages.upsert', (p) => {
+        const list = Array.isArray(p.messages) ? p.messages : [p.messages].filter(Boolean)
+        list.forEach((m) => feedMessage(p.sessionId, m))
+      })
+      waSocket.on('messages.update', (p) => {
+        const list = Array.isArray(p.updates) ? p.updates : []
+        list.forEach((u) =>
+          handleLiveChatNotifyEvent({
+            event: 'messages.update',
+            sessionId: p.sessionId,
+            data: { messages: { ...(u.update || {}), key: u.key, id: u.key?.id } }
+          })
+        )
+      })
+      waSocket.on('chats.update', (p) => {
+        handleLiveChatNotifyEvent({ event: 'chats.upsert', sessionId: p.sessionId, data: { chats: p.chats || [] } })
+        // Baileys embeds recent messages inside chats.update — surface them to
+        // the open conversation so they render live.
+        ;(p.chats || []).forEach((c) => {
+          ;(c.messages || []).forEach((m) => feedMessage(p.sessionId, m))
+        })
+      })
+      waSocket.on('connect_error', (e) => console.error('WA socket error:', e.message))
+    } catch (e) {
+      console.error('connectSocketIO failed', e)
+    }
+  }
+  const disconnectSocketIO = () => {
+    try { waSocket?.disconnect() } catch (_) {}
+    waSocket = null
+  }
+
   // handle webhook
   const connectWebSocket = (channelName) => {
     console.log('Activating live chat...')
@@ -735,6 +797,8 @@ export const useChatStore = defineStore('chatStore', () => {
     replaceTextWithShortCodes,
     quickReplyModalSearchInput,
     connectWebSocket,
+    connectSocketIO,
+    disconnectSocketIO,
     getChatProfilePic
   }
 })

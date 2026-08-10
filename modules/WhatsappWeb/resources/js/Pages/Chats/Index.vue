@@ -21,6 +21,7 @@ const props = defineProps([
   'quick_replies',
   'badges',
   'api_base_url',
+  'wa_socket',
   'languages',
   'module_features'
 ])
@@ -45,6 +46,18 @@ onMounted(() => {
   })
 
   chatStore.connectWebSocket(`live-chat.whatsapp-web.${authUser.value?.active_workspace?.owner_id}`)
+
+  // Realtime via the Node socket.io server (used when wa_socket.url is set).
+  if (props.wa_socket?.url) {
+    chatStore.connectSocketIO(
+      props.wa_socket,
+      (props.platforms ?? []).map((p) => p.uuid)
+    )
+  }
+})
+
+onUnmounted(() => {
+  chatStore.disconnectSocketIO?.()
 })
 </script>
 

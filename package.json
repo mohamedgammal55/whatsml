@@ -12,7 +12,6 @@
     "build:web-scraping": "vite build --config modules/WebScraping/vite.config.js",
     "build:number-checker": "vite build --config modules/NumberChecker/vite.config.js"
   },
-  
   "devDependencies": {
     "@iconify/vue": "^4.3.0",
     "@mertasan/tailwindcss-variables": "^2.7.0",
@@ -62,6 +61,7 @@
     "dropzone-vue": "^0.1.11",
     "flatpickr": "^4.6.13",
     "gsap": "^3.13.0",
+    "socket.io-client": "^4.7.5",
     "isomorphic-dompurify": "^2.26.0",
     "jquery": "^3.7.1",
     "moment": "^2.30.1",

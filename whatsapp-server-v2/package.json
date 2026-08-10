@@ -1,0 +1,32 @@
+{
+  "name": "quickzap-wa-server",
+  "version": "1.0.0",
+  "description": "QuickZap WhatsApp API server (Baileys) — stability-hardened, drop-in compatible",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/index.js",
+    "start:pm2": "pm2 start ecosystem.config.js --env production",
+    "prisma:pull": "prisma db pull && prisma generate",
+    "prisma:generate": "prisma generate",
+    "postinstall": "prisma generate"
+  },
+  "author": "QuickZap",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@prisma/client": "^6.10.1",
+    "axios": "^1.7.7",
+    "baileys": "7.0.0-rc.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "node-cache": "^5.1.2",
+    "pino": "^9.5.0",
+    "qrcode": "^1.5.3",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "prisma": "^6.10.1"
+  }
+}
