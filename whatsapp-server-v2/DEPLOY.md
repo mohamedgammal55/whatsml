@@ -1,131 +1,141 @@
-# QuickZap v2 — Deploy & Realtime Setup (what YOU do online)
+# QuickZap — نشر السيرفر الجديد (v2) + الريلتايم أونلاين
 
-Follow top to bottom. Two sides need env values: the **Node server** and the
-**Laravel app**. The realtime socket is secured with **one shared secret** that
-must be identical on both sides.
+> استبدل `YOURDOMAIN.com` بدومينك، و `DBUSER/DBPASS/DBNAME` ببيانات قاعدة بياناتك.
+> السرّ المشترك (SOCKET_SECRET) لازم يكون **نفسه** في لارافيل والنود.
 
----
-
-## 0) The shared secret (use this, or generate your own)
-
+سرّ جاهز (أو ولّد جديد: `openssl rand -hex 32`):
 ```
 7124d784b70d976c896edba424e4eae8970074e1434e190ce0a03400678ad281
 ```
-(generate your own with: `openssl rand -hex 32`)
-
-Put the SAME value in BOTH env files below (`SOCKET_SECRET` on Node,
-`WHATSAPP_WEB_SOCKET_SECRET` on Laravel).
 
 ---
 
-## 1) Node server — `whatsapp-server-v2/.env`
+## 1) ملفات ترفعها على السيرفر
+- المجلد كامل: `whatsapp-server-v2/`  (من غير `node_modules` و `.env`)
+- ملفات لارافيل المعدّلة:
+  - `modules/WhatsappWeb/config/config.php`
+  - `modules/WhatsappWeb/app/Http/Controllers/PlatformConversationController.php`
+  - `modules/WhatsappWeb/app/Http/Controllers/PlatformController.php`
+  - `modules/WhatsappWeb/routes/web.php`
+  - `modules/WhatsappWeb/resources/js/Stores/chatStore.js`
+  - `modules/WhatsappWeb/resources/js/Pages/Chats/Index.vue`
+  - `modules/WhatsappWeb/resources/js/Pages/Platforms/Index.vue`
+  - `package.json` (فيه socket.io-client)
 
+---
+
+## 2) NODE server v2
+```bash
+cd whatsapp-server-v2
+npm install          # JS خالص، مفيش build — بيعمل prisma generate تلقائي
+cp .env.example .env
+nano .env            # املأه زي تحت
+```
+
+**`whatsapp-server-v2/.env`:**
 ```env
 PORT=3000
 NODE_ENV=production
-BASE_URL=https://YOUR-APP-DOMAIN.com          # Laravel app URL (webhooks POST here)
-DATABASE_URL="mysql://DBUSER:DBPASS@127.0.0.1:3306/DBNAME"   # SAME DB as the app
+
+# دومين تطبيق لارافيل (النود بيبعت webhooks عليه)
+BASE_URL=https://YOURDOMAIN.com
+
+# قاعدة البيانات — نفس بتاعت المشروع
+# لو الباسورد فيه رموز: node -e "console.log(encodeURIComponent('PASS'))"
+DATABASE_URL="mysql://DBUSER:DBPASS@127.0.0.1:3306/DBNAME"
+
 ENABLE_WEBHOOK=true
 ENABLE_WEBSOCKET=true
 LOG_LEVEL=info
 
-# realtime auth — MUST equal Laravel's WHATSAPP_WEB_SOCKET_SECRET
+# نفس السرّ اللي في لارافيل
 SOCKET_SECRET=7124d784b70d976c896edba424e4eae8970074e1434e190ce0a03400678ad281
 
-# stability tuning (defaults are fine)
+RECONNECT_INTERVAL=15000
 MAX_RECONNECT_RETRIES=0
 KEEPALIVE_INTERVAL_MS=20000
+CONNECT_TIMEOUT_MS=30000
 MARK_ONLINE_ON_CONNECT=false
+SEND_PRESENCE_BEFORE_SEND=true
 SYNC_FULL_HISTORY=false
+API_KEY=
 ```
 
-Run it (JS, **no build step**):
+شغّله (وأوقف القديم الأول — سيرفر واحد بس على 3000):
 ```bash
-cd whatsapp-server-v2
-cp .env.example .env      # then edit values above
-npm install               # runs prisma generate
-npm start                 # or: pm2 start ecosystem.config.js --env production
+pm2 stop <old-app-name>          # لو القديم شغّال بـ pm2
+npm run start:pm2                # pm2 start ecosystem.config.js --env production
+pm2 save
 ```
-Run **only ONE** WhatsApp server on port 3000 (v2 OR the old one — never both).
 
 ---
 
-## 2) Laravel app — `.env` (project root)
-
+## 3) LARAVEL .env (على السيرفر) — أضف/عدّل
 ```env
-# internal URL the app uses to call the Node server (server-to-server)
 WHATSAPP_WEB_API_BASE_URL=http://127.0.0.1:3000
-
-# PUBLIC socket URL the BROWSER connects to (see nginx step 3). Leave empty to
-# keep using refresh/polling instead of realtime.
-WHATSAPP_WEB_SOCKET_URL=https://wa-socket.YOUR-APP-DOMAIN.com
-
-# same secret as the Node server's SOCKET_SECRET
+WHATSAPP_WEB_SOCKET_URL=https://wa-socket.YOURDOMAIN.com
 WHATSAPP_WEB_SOCKET_SECRET=7124d784b70d976c896edba424e4eae8970074e1434e190ce0a03400678ad281
 ```
-Then:
 ```bash
 php artisan config:clear
 ```
-And deploy the built frontend: `public/build-modules/WhatsappWeb/*` (already built).
 
 ---
 
-## 3) Expose the Node socket publicly (nginx) — required for realtime
+## 4) بناء الفرونت (فيه socket.io-client + تعديلات الشات)
+```bash
+# جذر المشروع
+npm install
+npm run build
+```
 
-The browser can't reach `127.0.0.1:3000`. Give the Node server a public HTTPS
-host with **WebSocket upgrade**. Easiest: a subdomain `wa-socket.YOUR-DOMAIN`.
+---
 
+## 5) nginx — subdomain للسوكت (WebSocket)
+subdomain `wa-socket.YOURDOMAIN.com` يوجّه للنود 3000 مع WebSocket:
 ```nginx
 server {
-    listen 443 ssl;
-    server_name wa-socket.YOUR-APP-DOMAIN.com;
-
-    ssl_certificate     /path/fullchain.pem;
-    ssl_certificate_key /path/privkey.pem;
-
+    listen 80;
+    server_name wa-socket.YOURDOMAIN.com;
     location / {
         proxy_pass http://127.0.0.1:3000;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;      # <-- WebSocket
-        proxy_set_header Connection "upgrade";       # <-- WebSocket
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
-        proxy_read_timeout 3600s;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_read_timeout 86400;
     }
 }
 ```
-Set `WHATSAPP_WEB_SOCKET_URL=https://wa-socket.YOUR-APP-DOMAIN.com` (step 2).
-socket.io uses the default `/socket.io` path — no extra config needed.
-
-> Security: only clients holding a valid, per-user, time-limited token (minted
-> by Laravel with the shared secret) can connect, and each client only receives
-> events for ITS OWN sessions. Knowing the URL is not enough.
-
----
-
-## 4) Verify
-1. `curl https://wa-socket.YOUR-DOMAIN.com/health` → `{"ok":true}`
-2. Open a conversation → send/receive a message → it appears **without refresh**.
-3. Node logs show `QuickZap WA server listening` + `restoring sessions`.
+فعّل HTTPS (لازم wss):
+```bash
+sudo certbot --nginx -d wa-socket.YOURDOMAIN.com
+sudo nginx -t && sudo systemctl reload nginx
+```
+> aaPanel/CyberPanel: اعمل subdomain، proxy للـ 3000 مع تفعيل WebSocket + SSL من اللوحة.
 
 ---
 
-## Files changed (for your deploy)
-**Node (new folder):** all of `whatsapp-server-v2/`
-**Laravel:**
-- `modules/WhatsappWeb/config/config.php` (socket_url, socket_secret)
-- `modules/WhatsappWeb/app/Http/Controllers/PlatformConversationController.php` (mints socket token)
-- `modules/WhatsappWeb/resources/js/Stores/chatStore.js` + `Pages/Chats/Index.vue` (socket client)
-- built assets: `public/build-modules/WhatsappWeb/*`
-- root `package.json` (adds `socket.io-client`)
+## 6) تأكيد
+- `pm2 logs quickzap-wa-v2` → `listening` + `restoring sessions` + `connection open`.
+- افتح صفحة المحادثات → الكونسول: `WA socket connected` بدون أخطاء.
+- ابعت/استقبل → الرسالة تظهر لحظياً.
 
-## Summary of ALL keys you set online
-| Where | Key | Value |
+## رجوع سريع
+```bash
+pm2 stop quickzap-wa-v2 && pm2 start <old-app-name>
+```
+(الاتنين على نفس القاعدة، فالجلسات المربوطة زي ما هي.)
+
+---
+
+### ملخص المفاتيح
+| | لارافيل `.env` | النود `.env` |
 |---|---|---|
-| Node `.env` | `DATABASE_URL` | same MySQL as the app |
-| Node `.env` | `BASE_URL` | `https://YOUR-APP-DOMAIN.com` |
-| Node `.env` | `SOCKET_SECRET` | the shared secret |
-| Laravel `.env` | `WHATSAPP_WEB_API_BASE_URL` | `http://127.0.0.1:3000` |
-| Laravel `.env` | `WHATSAPP_WEB_SOCKET_URL` | `https://wa-socket.YOUR-APP-DOMAIN.com` |
-| Laravel `.env` | `WHATSAPP_WEB_SOCKET_SECRET` | the **same** shared secret |
+| قاعدة البيانات | `DB_*` (موجودة) | `DATABASE_URL` (نفسها) |
+| رابط النود الداخلي | `WHATSAPP_WEB_API_BASE_URL=http://127.0.0.1:3000` | `PORT=3000` |
+| هدف الـ webhook | — | `BASE_URL=https://YOURDOMAIN.com` |
+| رابط السوكت العام | `WHATSAPP_WEB_SOCKET_URL=https://wa-socket.YOURDOMAIN.com` | (عبر nginx) |
+| السرّ المشترك | `WHATSAPP_WEB_SOCKET_SECRET=...` | `SOCKET_SECRET=...` (نفسه) |
